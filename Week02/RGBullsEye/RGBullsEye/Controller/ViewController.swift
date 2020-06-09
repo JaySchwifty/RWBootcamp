@@ -19,15 +19,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var scoreLabel: UILabel!
     
     let game = BullsEyeGame()
-    let scoreIncrements = BullsEyeGame()
     var guessRgb = RGB()
     var targetRgb = RGB()
-    
-    var round = 0
-    var score = 0
-    var points = 0
     var currentVal = 0
-    
     
     
     @IBAction func aSliderMoved(sender: UISlider) {
@@ -51,21 +45,7 @@ class ViewController: UIViewController {
         let userScore = Int(guessRgb.difference(target: targetRgb) * 255.0)
         currentVal = Int(guessRgb.difference(target: targetRgb) * 255.0)
         
-//        // Sets up the alert screen text and describes how far away user was from targt lbl
-//        func pointFunc() -> String {
-//            var title: String
-//            if userScore == 0 {
-//                title = "Perfect"
-//                points += 100
-//            } else if userScore <= 5 {
-//                title = "Almost had it"
-//                points += 50
-//            } else {
-//                title = "Gotta get closer next time"
-//                points += 15
-//            }
-//            return title
-//        }
+        // Sets up the alert screen text and describes how far away user was from targt lbl
         
         //  show alert that tells how close you were to target lbl
         
@@ -90,32 +70,30 @@ class ViewController: UIViewController {
         
     }
     
-    func startGameOver() {
-        // Randomize target color
-               targetRgb.randomizeColors()
-               
-               //  Have targetLabel set to random color
-               targetLabel.backgroundColor = UIColor.init(rgbStruct: targetRgb)
-               
-              
-               // setting roundlbl back to 0
-               roundLabel.text = "Round: \(0)"
-               
-               // setting scorelbl back to 0
-               scoreLabel.text = "Score: \(0)"
-               
-               // set sliders back to starting point
-               redSlider.value = Float(Int(127))
-               greenSlider.value = Float(Int(127))
-               blueSlider.value = Float(Int(127))
-               
-               //Guess lbl back to white
-               guessLabel.backgroundColor = UIColor.white
-    }
     
     @IBAction func startOver(sender: AnyObject) {
         
-       startGameOver()
+        game.newRoundStarted()
+        
+        // Randomize target color
+        targetRgb.randomizeColors()
+        
+        //  Have targetLabel set to random color
+        targetLabel.backgroundColor = UIColor.init(rgbStruct: targetRgb)
+        
+        // setting roundlbl back to 0
+        roundLabel.text = "Round: \(game.round)"
+        
+        // setting scorelbl back to 0
+        scoreLabel.text = "Score: \(game.points)"
+        
+        // set sliders back to starting point
+        redSlider.value = Float(Int(127))
+        greenSlider.value = Float(Int(127))
+        blueSlider.value = Float(Int(127))
+        
+        //Guess lbl back to white
+        guessLabel.backgroundColor = UIColor.white
         
     }
     
@@ -123,14 +101,14 @@ class ViewController: UIViewController {
     func updateView() {
         
         // Increment the round
-        round += 1
         
+        game.roundIncrease()
         
         // update the round lbl text
-        roundLabel.text = "Round: \(round)"
+        roundLabel.text = "Round: \(game.round)"
         
         // TODO: change score to users score
-       
+        
         scoreLabel.text = "Score: \(game.score)"
         
         // Randomize target color
@@ -145,12 +123,12 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         // Display starting round
-        roundLabel.text = "Round: \(round)"
+        roundLabel.text = "Round: \(game.round)"
         
         // Display starting score
-        scoreLabel.text = "Score: \(score)"
+        scoreLabel.text = "Score: \(game.score)"
         
-      
+        
         
         // SliderValues set
         redSlider.value = Float(Int(127))
