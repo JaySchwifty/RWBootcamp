@@ -1,9 +1,10 @@
 # RWBootcamp
 
 Second Weeks HW! 
-For this weeks homework. I chose to use a class for both of my models.
+
+**For this weeks homework. I chose to use a class for both of my models.
 I chose to use a class because I wasn't changing anything pertaining to the 
-values set in it. Plus I didn't see the need to mutate my functions. 
+values set in it. Plus I didn't see the need to mutate my functions. **
 
 
 
