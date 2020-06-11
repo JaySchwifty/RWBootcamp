@@ -24,11 +24,16 @@ class ViewController: UIViewController {
     var currentVal = 0
     
     var quickDiff: Int {
-        return abs(game.targetValue - currentVal)
+        print("test")
+        return currentVal
     }
+    
 
     
     @IBAction func aSliderMoved(sender: UISlider) {
+        
+//        currentVal = Int(guessRgb.difference(target: targetRgb) * 255.0)
+        
         // Setting slider values for sliders moved
         guessRgb.r = Int(redSlider.value)
         guessRgb.g = Int(greenSlider.value)
@@ -42,9 +47,7 @@ class ViewController: UIViewController {
         greenLabel.text = String(guessRgb.g)
         blueLabel.text = String(guessRgb.b)
         
-        redSlider.minimumTrackTintColor = UIColor.blue.withAlphaComponent(CGFloat(quickDiff)/100.0)
-        greenSlider.minimumTrackTintColor = UIColor.blue.withAlphaComponent(CGFloat(quickDiff)/100.0)
-        blueSlider.minimumTrackTintColor = UIColor.blue.withAlphaComponent(CGFloat(quickDiff)/100.0)
+        sliderOpacity()
     }
     
     @IBAction func showAlert(sender: AnyObject) {
@@ -100,6 +103,8 @@ class ViewController: UIViewController {
         //Guess lbl back to white
         guessLabel.backgroundColor = UIColor.white
         
+        sliderOpacity()
+        
     }
     
     
@@ -126,10 +131,7 @@ class ViewController: UIViewController {
         guessLabel.backgroundColor = UIColor.white
         
         sliderSettings()
-        
-        redSlider.minimumTrackTintColor = UIColor.blue.withAlphaComponent(CGFloat(quickDiff)/100.0)
-        greenSlider.minimumTrackTintColor = UIColor.blue.withAlphaComponent(CGFloat(quickDiff)/100.0)
-        blueSlider.minimumTrackTintColor = UIColor.blue.withAlphaComponent(CGFloat(quickDiff)/100.0)
+        sliderOpacity()
     }
     
     func sliderSettings() {
@@ -145,10 +147,17 @@ class ViewController: UIViewController {
         blueLabel.text = String(Int(blueSlider.value))
     }
     
+    func sliderOpacity() {
+        currentVal = Int(guessRgb.difference(target: targetRgb) * 255.0)
+        
+        redSlider.minimumTrackTintColor = UIColor.blue.withAlphaComponent(CGFloat(quickDiff)/100.0)
+        greenSlider.minimumTrackTintColor = UIColor.blue.withAlphaComponent(CGFloat(quickDiff)/100.0)
+        blueSlider.minimumTrackTintColor = UIColor.blue.withAlphaComponent(CGFloat(quickDiff)/100.0)
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         
         // Display starting round
         roundLabel.text = "Round: \(game.round)"
@@ -163,6 +172,9 @@ class ViewController: UIViewController {
         
         //  Have targetLabel set to random color
         targetLabel.backgroundColor = UIColor.init(rgbStruct: targetRgb)
+
+        sliderOpacity()
+        sliderSettings()
     }
 }
 

@@ -6,7 +6,6 @@ class BullsEyeGame {  // might be class?
     var round = 0
     var score = 0
     var points = 0
-    var targetValue = 0
     
     init() {
         newRoundStarted()
@@ -25,21 +24,19 @@ class BullsEyeGame {  // might be class?
     
     func updateTheView(currentValue: Int) -> String {
         
-        let difference = abs(targetValue - currentValue)
-        points = 100 - difference
         
         var title: String
-        if difference == 0 {
+        if currentValue == 0 {
             title = "Perfect"
             points += 100
-        } else if difference <= 20 {
+        } else if currentValue <= 20 {
             title = "Almost had it"
             points += 50
         } else {
             title = "Gotta get closer next time"
             points += 15
         }
-        score += points
+        score = points
         return title
     }
     
