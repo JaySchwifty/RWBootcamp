@@ -3,8 +3,8 @@
 Second Weeks HW! 
 
 **For this weeks homework. I chose to use a class for both of my models.
-I chose to use a class because I wasn't changing anything pertaining to the 
-values set in it. Plus I didn't see the need to mutate my functions. **
+I chose to use a class because I needed to have values change within the game,
+the score and points of the game are examples. **
 
 
 
