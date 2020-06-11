@@ -23,6 +23,10 @@ class ViewController: UIViewController {
     var targetRgb = RGB()
     var currentVal = 0
     
+    var quickDiff: Int {
+        return abs(game.targetValue - currentVal)
+    }
+
     
     @IBAction func aSliderMoved(sender: UISlider) {
         // Setting slider values for sliders moved
@@ -37,6 +41,10 @@ class ViewController: UIViewController {
         redLabel.text = String(guessRgb.r)
         greenLabel.text = String(guessRgb.g)
         blueLabel.text = String(guessRgb.b)
+        
+        redSlider.minimumTrackTintColor = UIColor.blue.withAlphaComponent(CGFloat(quickDiff)/100.0)
+        greenSlider.minimumTrackTintColor = UIColor.blue.withAlphaComponent(CGFloat(quickDiff)/100.0)
+        blueSlider.minimumTrackTintColor = UIColor.blue.withAlphaComponent(CGFloat(quickDiff)/100.0)
     }
     
     @IBAction func showAlert(sender: AnyObject) {
@@ -49,7 +57,7 @@ class ViewController: UIViewController {
         
         //  show alert that tells how close you were to target lbl
         
-        let title = game.updateTheView(targetVal:currentVal )
+        let title = game.updateTheView(currentValue: currentVal )
         let message = "\(userScore)"
         
         /*
@@ -87,10 +95,7 @@ class ViewController: UIViewController {
         // setting scorelbl back to 0
         scoreLabel.text = "Score: \(game.points)"
         
-        // set sliders back to starting point
-        redSlider.value = Float(Int(127))
-        greenSlider.value = Float(Int(127))
-        blueSlider.value = Float(Int(127))
+        sliderSettings()
         
         //Guess lbl back to white
         guessLabel.backgroundColor = UIColor.white
@@ -116,11 +121,34 @@ class ViewController: UIViewController {
         
         //  Have targetLabel set to random color
         targetLabel.backgroundColor = UIColor.init(rgbStruct: targetRgb)
+        
+        //Guess lbl back to white
+        guessLabel.backgroundColor = UIColor.white
+        
+        sliderSettings()
+        
+        redSlider.minimumTrackTintColor = UIColor.blue.withAlphaComponent(CGFloat(quickDiff)/100.0)
+        greenSlider.minimumTrackTintColor = UIColor.blue.withAlphaComponent(CGFloat(quickDiff)/100.0)
+        blueSlider.minimumTrackTintColor = UIColor.blue.withAlphaComponent(CGFloat(quickDiff)/100.0)
+    }
+    
+    func sliderSettings() {
+        
+        // set sliders back to starting point
+        redSlider.value = Float(Int(127))
+        greenSlider.value = Float(Int(127))
+        blueSlider.value = Float(Int(127))
+        
+        // color labels set to each current slider value
+        redLabel.text = String(Int(redSlider.value))
+        greenLabel.text = String(Int(greenSlider.value))
+        blueLabel.text = String(Int(blueSlider.value))
     }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         
         // Display starting round
         roundLabel.text = "Round: \(game.round)"
@@ -128,24 +156,13 @@ class ViewController: UIViewController {
         // Display starting score
         scoreLabel.text = "Score: \(game.score)"
         
-        
-        
-        // SliderValues set
-        redSlider.value = Float(Int(127))
-        greenSlider.value = Float(Int(127))
-        blueSlider.value = Float(Int(127))
+        sliderSettings()
         
         // Randomize target color
         targetRgb.randomizeColors()
         
         //  Have targetLabel set to random color
         targetLabel.backgroundColor = UIColor.init(rgbStruct: targetRgb)
-        
-        // color labels set to each current slider value
-        redLabel.text = String(redSlider.value)
-        greenLabel.text = String(greenSlider.value)
-        blueLabel.text = String(blueSlider.value)
-        
     }
 }
 

@@ -48,12 +48,11 @@ class BullsEyeGame {
     func startNewRound() {
         round += 1
         targetValue = Int.random(in: 1...100)
-        
     }
     
     func startNewGame() {
+        startNewRound()
         score = 0
         round = 0
-        startNewRound()
     }
 }
