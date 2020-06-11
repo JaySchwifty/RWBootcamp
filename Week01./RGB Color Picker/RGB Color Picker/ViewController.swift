@@ -79,7 +79,7 @@ class ViewController: UIViewController {
     
     @IBAction func reset(_ sender: UIButton) {
          
-        colorName.text = colorNameLbl
+        colorName.text = colorNameLb
         blueValue.text = String(0)
         redValue.text = String(0)
         greenValue.text = String(0)
