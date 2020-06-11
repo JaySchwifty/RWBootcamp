@@ -25,8 +25,6 @@ class BullsEyeGame {
      let difference = abs(targetValue - currentValue)
         points = 100 - difference
 
-        
-
         var title: String
         if difference == 0 {
             title = "Perfect!"
