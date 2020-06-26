@@ -26,10 +26,10 @@ class ViewController: UIViewController {
         "Java",
         "GO",
         "Swift"
-                ]
+    ]
     
     var currentItemIndex = 0
-    var sliderScore = Float(0.0)
+    
     
     var person1 = Person(id: 1, items: [:])
     var person2 = Person(id: 2, items: [:])
@@ -37,74 +37,45 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        questionLabel.text = "User 1 what do you think about..."
+        questionLabel.text = "User 1, what do you think about..."
         compatibilityItemLabel.text = "\(compatibilityItems[0])"
         currentPerson = person1
-        nextQ()
+        slider.minimumValue = 0
     }
     
     @IBAction func sliderValueChanged(_ sender: UISlider) {
-        sliderScore = sender.value
+        slider.maximumValue = 5
+        print(slider.value)
     }
     
-    func nextQ(){
-        if (currentPerson == person1) {
-            questionLabel.text = "Person1, what do you think about .."
-        } else {
-            questionLabel.text = "Person2, what do you think about .."
-        }
-        
-        print("currentItemIndex: \(currentItemIndex)")
-        
-        compatibilityItemLabel.text = compatibilityItems[currentItemIndex]
-    }
     
-    func printArray(){
-        print("currentPerson")
-        for (key, personRating) in currentPerson!.items{
-            print("\(key): \(personRating)")
-        }
-        
-    }
     
     @IBAction func didPressNextItemButton(_ sender: Any) {
-        sliderScore = slider.value
-        currentPerson?.items[compatibilityItems[currentItemIndex]] = sliderScore
+        let currentItem = compatibilityItems[currentItemIndex]
+        currentPerson?.items.updateValue(slider.value, forKey: currentItem)
         
-        if (currentItemIndex < compatibilityItems.count-1){
+        if currentItemIndex < compatibilityItems.count - 1 {
             currentItemIndex += 1
-            nextQ()
-        } else {
-            printArray()
-            currentItemIndex = 0
-            
-            if (currentPerson == person1){
-                currentPerson = person2
-                nextQ()
-                
-            } else {
-                
-                let score = calculateCompatibility()
-                let title = "Results"
-                let message = "You two are \(score) compatible"
-                
-                let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-                
-                let action = UIAlertAction(title: "OK", style: .default, handler: {
-                    action in
-                    
-                    self.currentPerson = self.person1
-                    self.slider.value = 5
-                    self.sliderScore = self.slider.value
-                    self.nextQ()
-                })
-                
-                alert.addAction(action)
-                present(alert, animated: true, completion: nil)
-            }
         }
+        compatibilityItemLabel.text = compatibilityItems[currentItemIndex]
+        
+        
+        if currentItem == compatibilityItems[10] && currentPerson == person1 {
+            questionLabel.text = "User 2, what do you think about..."
+            currentItemIndex = 0
+            compatibilityItemLabel.text = "\(compatibilityItems[0])"
+            currentPerson = person2
+        } else if currentItem == compatibilityItems[10] && currentPerson == person2{
+            let message = calculateCompatibility()
+            
+            let alert = UIAlertController(title: "Here are your results!", message:" Both of you are \(message) compatible", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            
+            self.present(alert, animated: true, completion: nil)
+            
+        }
+        
     }
-    
     
     func calculateCompatibility() -> String {
         // If diff 0.0 is 100% and 5.0 is 0%, calculate match percentage
