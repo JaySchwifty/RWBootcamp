@@ -42,10 +42,11 @@ class ViewController: UIViewController {
         compatibilityItemLabel.text = "\(compatibilityItems[0])"
         currentPerson = person1
         nextQ()
+        slider.value = 0.0
     }
     
     @IBAction func sliderValueChanged(_ sender: UISlider) {
-        slider.maximumValue = 5
+        slider.maximumValue = 5.0
         print(slider.value)
     }
     
@@ -97,23 +98,9 @@ class ViewController: UIViewController {
             if (currentPerson == person1){
                 currentPerson = person2
                 nextQ()
-                
-            } else {
-                
-                let title = "Results"
-                let message = "You two are \(calculateCompatibility()) compatible"
-                
-                let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-                
-                let action = UIAlertAction(title: "OK", style: .default, handler: nil)
-                
-                alert.addAction(action)
-                present(alert, animated: true, completion: nil)
             }
         }
     }
-  
-    
     
     func calculateCompatibility() -> String {
         // If diff 0.0 is 100% and 5.0 is 0%, calculate match percentage
