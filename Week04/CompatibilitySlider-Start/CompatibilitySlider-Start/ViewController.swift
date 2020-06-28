@@ -94,11 +94,6 @@ class ViewController: UIViewController {
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             
             self.present(alert, animated: true, completion: nil)
-            
-            if (currentPerson == person1){
-                currentPerson = person2
-                nextQ()
-            }
         }
     }
     
